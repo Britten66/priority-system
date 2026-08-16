@@ -2,6 +2,7 @@ package ca.chrisbritten.warehouse.controller;
 
 import ca.chrisbritten.warehouse.model.Order;
 import ca.chrisbritten.warehouse.service.OrderService;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public Order createOrder(@RequestBody Order order) {
+    public Order createOrder(@Valid @RequestBody Order order) {
         return orderService.createOrder(order);
     }
 
