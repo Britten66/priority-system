@@ -1,9 +1,12 @@
+
+
 package ca.chrisbritten.warehouse.service;
 
 import ca.chrisbritten.warehouse.algorithm.ProductSorter;
 import ca.chrisbritten.warehouse.model.Product;
 import ca.chrisbritten.warehouse.repository.ProductRepository;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +24,11 @@ public class ProductService {
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
+    }
+
+    public Product getProductById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Product not found: " + id));
     }
 
     public List<Product> getProductsSortedByPrice() {
