@@ -5,6 +5,7 @@ import ca.chrisbritten.warehouse.model.Order;
 import ca.chrisbritten.warehouse.repository.OrderRepository;
 import jakarta.annotation.PostConstruct;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,10 +36,18 @@ public class OrderService {
     }
 
     public Order getHighestPriorityOrder() {
-        return orderBST.findHighest();
+        Order highest = orderBST.findHighest();
+        if (highest == null) {
+            throw new NoSuchElementException("No orders exist");
+        }
+        return highest;
     }
 
     public Order getLowestPriorityOrder() {
-        return orderBST.findLowest();
+        Order lowest = orderBST.findLowest();
+        if (lowest == null) {
+            throw new NoSuchElementException("No orders exist");
+        }
+        return lowest;
     }
 }
