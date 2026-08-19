@@ -1,0 +1,47 @@
+package ca.chrisbritten.warehouse.controller;
+
+import ca.chrisbritten.warehouse.model.Order;
+import ca.chrisbritten.warehouse.service.OrderService;
+import jakarta.validation.Valid;
+import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/orders")
+public class OrderController {
+
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
+    @PostMapping
+    public Order createOrder(@Valid @RequestBody Order order) {
+        return orderService.createOrder(order);
+    }
+
+    @GetMapping
+    public List<Order> getOrders() {
+        return orderService.getAllOrders();
+    }
+
+    @GetMapping("/priority/inorder")
+    public List<Order> getOrdersByPriority() {
+        return orderService.getOrdersByPriority();
+    }
+
+    @GetMapping("/priority/highest")
+    public Order getHighestPriorityOrder() {
+        return orderService.getHighestPriorityOrder();
+    }
+
+    @GetMapping("/priority/lowest")
+    public Order getLowestPriorityOrder() {
+        return orderService.getLowestPriorityOrder();
+    }
+}
