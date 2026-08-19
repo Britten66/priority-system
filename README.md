@@ -1,6 +1,6 @@
 # priority-system
 
-Warehouse order-priority system built with Spring Boot, JPA, and H2 for my Data Structures and Algorithms final. Orders get ranked by priority using a binary search tree I wrote myself, and products can be sorted by price or stock using insertion sort I wrote myself (no built-in sort methods).
+Warehouse order-priority system built with Spring Boot, JPA, and MySQL for my Data Structures and Algorithms final. Orders get ranked by priority using a binary search tree I wrote myself, and products can be sorted by price or stock using insertion sort I wrote myself (no built-in sort methods).
 
 ## Stack
 
