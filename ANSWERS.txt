@@ -1,0 +1,133 @@
+THEORY QUESTIONS
+
+BINARY SEARCH TREE
+
+Q: Why does an inorder traversal of a BST return sorted results?
+
+A: Because of how the tree gets built in the first place. Every time I insert
+a node, anything smaller than the current node goes left and anything equal
+or bigger goes right, so by the time the tree is done, every node's left
+side only has smaller values and its right side only has bigger ones.
+Inorder traversal visits left, then the node itself, then right, so it's
+basically walking through the tree from smallest to largest without me
+having to sort anything after the fact.
+
+Q: What happens if you insert 1, 2, 3, 4, 5 in order? How does this affect
+performance?
+
+A: Since each new number is always bigger than the last one, every insert
+goes to the right of the previous node. You end up with a tree that's
+really just a straight line going right, insted of an actual tree shape.
+That kills the point of using a BST at all. Instead of skipping half the
+remaining nodes at each step like a balanced tree would, you have to walk
+through every node one at a time, so performance drops from O(log n) down
+to O(n).
+
+Q: What is the difference between average and worst-case time complexity
+for a BST?
+
+A: Average case is O(log n) as long as the tree stays roughly balanced,
+because each comparison cuts the remaining nodes in half. Worst case is
+O(n), and that happens when the tree gets skewed like the 1-2-3-4-5
+example above, where you're stuck checking almost every node one after
+another instead of skipping any of them.
+
+Q: Where would you place duplicate priority values in your tree? Explain
+your choice.
+
+A: I send them right, same as anything greater than or equal to the
+current node. I didn't want to just drop duplicate priorities, since
+that's a real order that still needs to get filled eventually, and
+sending them right keeps them in the same order they were created in
+instead of scrambling things around.
+
+SORTING ALGORITHM
+
+Q: Explain how your sorting algorithm works, step by step, using a small
+example.
+
+A: I used insertion sort. The idea is you build up a sorted section of the
+list one item at a time, taking the next unsorted item and sliding it
+backward past anything bigger than it until it lands in the right spot.
+Example on 5, 2, 4:
+Start with just 5, that's trivially sorted on its own.
+Grab 2 next, compare it to 5, 2 is smaller so 5 slides over and 2 goes in
+front, giving 2, 5.
+Grab 4, compare to 5, 4 is smaller so 5 slides over. Compare 4 to 2, 4 is
+bigger so it stops there. End result is 2, 4, 5.
+
+Q: What is the time complexity of your algorithm?
+
+A: Worst case and average case are both O(n squared), since for every
+element you might have to shift past most of the sorted section behind
+it. Best case is O(n) if the list is already sorted, because nothing ever
+needs to move.
+
+Q: When would your sorting algorithm perform well?
+
+A: On small lists, or lists that are already close to sorted. The fewer
+shifts it has to do, the faster it runs, and a nearly sorted list barely
+needs any shifting at all.
+
+Q: Is your sorting algorithm ideal or not ideal for very large datasets?
+Why?
+
+A: Not ideal. Once n gets big the n squared part takes over and it gets
+slow fast compared to something like merge sort or quick sort. It's fine
+here since the product list is small, but I wouldn't use it on a huge
+dataset.
+
+SYSTEM DESIGN
+
+Q: Why might you choose to sort data in your application instead of the
+database?
+
+A: Mainly because the assinment wanted me to actually write a sorting
+algorithm by hand instead of letting the database handle it with ORDER BY.
+In a real project I'd probably let the database do it since it's built
+and optimized for that, but the point here was showing I understand how
+sorting actually works under the hood.
+
+Q: What is one advantage of using a BST in this system?
+
+A: Once an order is in the tree, the priority order is already there. I
+don't have to re-sort the whole list every time someone asks for it, the
+traversal just walks a structure that's already organized.
+
+Q: What is one limitation of your current design?
+
+A: The tree isn't self-balancing. If orders come in with priorities that
+happen to already be sorted, or close to it, the tree turns into that
+same linked-list situation from the insert-in-order question, and
+performance drops to O(n). A real system would probably want something
+like an AVL tree or a red-black tree to keep itself balanced
+automatically.
+
+AI USAGE DISCLOSURE
+
+I used Claude (Claude Code) mostly for debugging and for checking my work
+against the assignment doc, not to write things from scratch.
+
+- Had it compare my endpoint list against the spec and point out where I
+didn't match up. My sorting was on a sort query param instead of the
+required /products/sorted?by= path, and my priority lookups were sitting
+at /orders/highest and /orders/lowest instead of under /orders/priority/.
+
+- When I got a 500 error trying to post a customer through Postman, I gave
+it the error message and had it look at my server logs to figure out what
+was actually going wrong. Turned out I had an id field left in my request
+body from copy pasting an old response, which made Hibernate think it was
+updating an existing row instead of creating a new one.
+
+- General workflow the whole time was pretty much: run something, and if
+it broke or didn't line up with the spec, hand back whatever error or
+response I got and ask what was wrong, then either fix it myself or have
+it make the change directly.
+
+- Also had it tighten priorityLevel to actually enforce 1 through 10,
+since I'd only been checking for greater than or equal to 0 before and
+missed that part of the spec on a first pass.
+
+- The BST, the sorting algorithm, the entities, and the tests themselves
+were all written before I started using it this way. This was more about
+catching stuff I missed and fixing bugs than writing the core logic.
