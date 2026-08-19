@@ -26,16 +26,21 @@ public class OrderController {
     }
 
     @GetMapping
+    public List<Order> getOrders() {
+        return orderService.getAllOrders();
+    }
+
+    @GetMapping("/priority/inorder")
     public List<Order> getOrdersByPriority() {
         return orderService.getOrdersByPriority();
     }
 
-    @GetMapping("/highest")
+    @GetMapping("/priority/highest")
     public Order getHighestPriorityOrder() {
         return orderService.getHighestPriorityOrder();
     }
 
-    @GetMapping("/lowest")
+    @GetMapping("/priority/lowest")
     public Order getLowestPriorityOrder() {
         return orderService.getLowestPriorityOrder();
     }

@@ -29,14 +29,19 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getProducts(@RequestParam(required = false) String sort) {
-        if ("price".equalsIgnoreCase(sort)) {
+    public List<Product> getProducts() {
+        return productService.getAllProducts();
+    }
+
+    @GetMapping("/sorted")
+    public List<Product> getSortedProducts(@RequestParam String by) {
+        if ("price".equalsIgnoreCase(by)) {
             return productService.getProductsSortedByPrice();
         }
-        if ("stock".equalsIgnoreCase(sort)) {
+        if ("stock".equalsIgnoreCase(by)) {
             return productService.getProductsSortedByStock();
         }
-        return productService.getAllProducts();
+        throw new IllegalArgumentException("Unsupported sort field: " + by);
     }
 
     @GetMapping("/{id}")

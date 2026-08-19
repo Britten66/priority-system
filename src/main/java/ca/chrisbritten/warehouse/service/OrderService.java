@@ -31,6 +31,10 @@ public class OrderService {
         return saved;
     }
 
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
     public List<Order> getOrdersByPriority() {
         return orderBST.inorder();
     }

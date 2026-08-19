@@ -26,4 +26,10 @@ public class ValidationExceptionHandler {
     public Map<String, String> handleNotFound(NoSuchElementException ex) {
         return Map.of("error", ex.getMessage());
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleBadRequest(IllegalArgumentException ex) {
+        return Map.of("error", ex.getMessage());
+    }
 }
