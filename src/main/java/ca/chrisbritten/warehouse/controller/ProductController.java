@@ -1,4 +1,3 @@
-
 package ca.chrisbritten.warehouse.controller;
 
 import ca.chrisbritten.warehouse.model.Product;

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
+// this is where the BST for order priority is implemented
 @Component
 public class OrderBST {
 
@@ -22,7 +23,7 @@ public class OrderBST {
         if (order.getPriorityLevel() < current.getData().getPriorityLevel()) {
             current.setLeft(insertRecursive(current.getLeft(), order));
         } else {
-            // Duplicates go right so no order is discarded and ties keep insertion order.
+            // ties go right
             current.setRight(insertRecursive(current.getRight(), order));
         }
 

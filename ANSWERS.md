@@ -19,8 +19,8 @@ Right subtree. That way no order ever gets dropped, and ties keep their insertio
 **Explain how your sorting algorithm works, step-by-step, with a small example.**
 Insertion sort. Example on `[5, 2, 4]`:
 - Start with `[5]` sorted.
-- Insert 2, shift 5 over → `[2, 5]`.
-- Insert 4, shift 5 over → `[2, 4, 5]`.
+- Insert 2, shift 5 over, get `[2, 5]`.
+- Insert 4, shift 5 over, get `[2, 4, 5]`.
 
 **Time complexity of your algorithm?**
 O(n²) average and worst case, O(n) if the list's already sorted.
@@ -46,7 +46,8 @@ It's not self-balancing, so a bad insert order (like sequential priorities) can 
 
 I used Claude (Claude Code) mainly for debugging and checking my work against the assignment doc, not for writing things from scratch.
 
-- Had it compare my endpoint list against the spec and point out where I didn't match — sorting was on a `?sort=` query param instead of `/products/sorted?by=`, and priority lookups were sitting at `/orders/highest`/`/orders/lowest` instead of `/orders/priority/...`.
-- When I got a 500 error posting a customer through Postman, I gave it the error and had it check the server logs to find the actual cause — turned out I had an `id` field left in my request body, which made Hibernate treat it as an update instead of an insert.
+- Had it compare my endpoint list against the spec and point out where I didn't match. Sorting was on a `?sort=` query param instead of `/products/sorted?by=`, and priority lookups were sitting at `/orders/highest`/`/orders/lowest` instead of `/orders/priority/...`.
+- When I got a 500 error posting a customer through Postman, I gave it the error and had it check the server logs to find the actual cause. Turned out I had an `id` field left in my request body, which made Hibernate treat it as an update instead of an insert.
 - General workflow was: run something, and if it broke or didn't match spec, hand back the error/response and ask what was wrong, then fix it myself or have it make the change.
+- Also had it tighten priorityLevel to 1-10 (was only checking >= 0 before) after re-reading the spec and catching that it was too loose.
 - BST, sorting algorithm, entities, and tests were already written before this pass.

@@ -1,5 +1,3 @@
-
-
 package ca.chrisbritten.warehouse.service;
 
 import ca.chrisbritten.warehouse.algorithm.ProductSorter;
