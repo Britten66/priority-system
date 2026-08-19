@@ -4,17 +4,25 @@ Warehouse order-priority system built with Spring Boot, JPA, and H2 for my Data 
 
 ## Stack
 
-Java 21, Spring Boot, Spring Web, Spring Data JPA, Bean Validation, H2 (file-based, saves to `./data/warehousedb`).
+Java 21, Spring Boot, Spring Web, Spring Data JPA, Bean Validation, MySQL 8.
 
 ## Running it
+
+MySQL needs to be up first. Easiest way is Docker:
+
+```bash
+docker run -d --name warehouse-mysql -p 3307:3306 \
+  -e MYSQL_ROOT_PASSWORD=warehouse -e MYSQL_DATABASE=warehouse \
+  mysql:8
+```
+
+Then run the app:
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
 Starts on `http://localhost:8080`. On first run with an empty database, `DataSeeder` adds three customers, three products, and three orders with different priority levels so there's something to look at right away.
-
-H2 console is at `http://localhost:8080/h2-console` (JDBC URL `jdbc:h2:file:./data/warehousedb`, user `SA`, no password).
 
 ## Running the tests
 
